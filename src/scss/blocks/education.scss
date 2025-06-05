@@ -1,0 +1,23 @@
+.education {
+    margin-bottom: $spacing-xl;
+
+    .timeline__title {
+        font-size: $font-size-base;
+        color: $color-primary;
+        margin-bottom: $spacing-xs;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .timeline__period {
+        font-size: $font-size-small;
+        color: $color-accent;
+        margin-bottom: $spacing-sm;
+    }
+
+    .timeline__description {
+        color: $color-secondary;
+        line-height: 1.6;
+        font-size: $font-size-base;
+    }
+}

@@ -1,0 +1,31 @@
+.skills {
+    margin-bottom: $spacing-xl;
+
+    &__list {
+        display: grid;
+        gap: $spacing-md;
+    }
+}
+
+.skill-item {
+    &__name {
+        display: block;
+        margin-bottom: $spacing-xs;
+        color: $color-secondary;
+        font-size: $font-size-small;
+    }
+
+    &__bar {
+        height: $skill-bar-height;
+        background-color: rgba($color-primary, 0.1);
+        border-radius: $skill-bar-height / 2;
+        overflow: hidden;
+    }
+
+    &__progress {
+        height: 100%;
+        background-color: $color-rating;
+        border-radius: $skill-bar-height / 2;
+        transition: width 0.3s ease;
+    }
+}

@@ -1,0 +1,300 @@
+// Import variables
+@import '_variables';
+
+// Animation keyframes
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+// Base styles
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: $font-primary;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $color-text;
+    background-color: #F5F5F5;
+    padding: $spacing-xl;
+}
+
+// Navigation styles
+.main-nav {
+    background-color: $color-background;
+    border-bottom: 1px solid $color-border;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    max-width: $container-width;
+    margin: 0 auto $spacing-md;
+    border-radius: $border-radius;
+
+    &__list {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        position: relative;
+        animation: fadeIn 0.5s ease-out forwards;
+        opacity: 0;
+
+        @for $i from 1 through 5 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{$i * 0.1}s;
+            }
+        }
+    }
+
+    &__link {
+        display: block;
+        padding: $spacing-md $spacing-lg;
+        color: $color-primary;
+        text-decoration: none;
+        font-size: $font-size-base;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
+        transition: color 0.3s ease;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: $color-accent;
+            transition: width 0.3s ease;
+        }
+
+        &:hover {
+            color: $color-accent;
+
+            &::after {
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Resume container
+.resume {
+    max-width: $container-width;
+    margin: 0 auto;
+    background: $color-background;
+    box-shadow: $shadow-card;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    .header {
+        width: 100%;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+
+        &__container {
+            width: 100%;
+            max-width: $container-width;
+            margin: 0 auto;
+            padding: 0 $spacing-lg;
+        }
+    }
+}
+
+// Resume container inner layout
+.resume__container {
+    display: flex;
+    gap: $spacing-xl;
+}
+
+.section-title {
+    font-size: $font-size-h2;
+    color: $color-primary;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: $spacing-lg;
+    font-weight: 600;
+    position: relative;
+    animation: fadeIn 0.5s ease-out forwards;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: $color-accent;
+        transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+        width: 40px;
+    }
+}
+
+.sidebar {
+    width: $sidebar-width;
+    min-width: $sidebar-width;
+    padding: $spacing-lg;
+    background-color: #FAFAFA;
+    border-right: 1px solid $color-border;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .section-title {
+        width: 100%;
+        text-align: center;
+        position: relative;
+        margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-sm;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background-color: $color-accent;
+            transition: width 0.3s ease;
+        }
+
+        &:hover::after {
+            width: 60px;
+        }
+    }
+}
+
+.main-content {
+    flex: 1;
+    padding: $spacing-lg $spacing-xl;
+}
+
+// Timeline component
+.timeline {
+    position: relative;
+    
+    &__item {
+        position: relative;
+        padding-left: $spacing-xl;
+        margin-bottom: $spacing-xl;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: $skill-dot-size;
+            height: $skill-dot-size;
+            background-color: $color-accent;
+            border-radius: 50%;
+        }
+        
+        &::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: $skill-dot-size;
+            width: 1px;
+            height: calc(100% + #{$spacing-lg});
+            background-color: $color-border;
+        }
+        
+        &:last-child::after {
+            display: none;
+        }
+    }
+}
+
+// Import block styles
+@import 'blocks/header';
+@import 'blocks/profile';
+@import 'blocks/skills';
+@import 'blocks/experience';
+@import 'blocks/education';
+@import 'blocks/hobbies';
+
+// Add smooth transitions for all interactive elements
+a, button, .contact-list__item, .hobby-item, .skill-item {
+    transition: all 0.3s ease;
+}
+
+// Add hover effects for interactive elements
+.hobby-item {
+    &:hover {
+        transform: translateY(-3px);
+    }
+}
+
+.skill-item {
+    &:hover .skill-item__bar {
+        transform: scaleX(1.02);
+        transition: transform 0.3s ease;
+    }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+    body {
+        padding: $spacing-sm;
+    }
+
+    .resume__container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid $color-border;
+        padding-bottom: $spacing-lg;
+    }
+
+    .contact-list {
+        max-width: 280px;
+    }
+
+    .main-content {
+        padding: $spacing-lg;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile__photo-placeholder {
+        width: 100px;
+        height: 100px;
+    }
+
+    .contact-list__item {
+        font-size: $font-size-small;
+        margin-bottom: $spacing-sm;
+    }
+
+    .section-title {
+        font-size: $font-size-base;
+    }
+}
