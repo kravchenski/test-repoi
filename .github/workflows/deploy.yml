@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [master]
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,31 +16,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
-      - name: Enable GitHub Pages
-        uses: actions/configure-pages@v4
+      - uses: actions/setup-node@v4
         with:
-          enablement: true
-      
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+          node-version: '20'
           
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm list vite sass
         
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          ls -la dist/
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -49,8 +47,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: dist
           
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
